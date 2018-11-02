@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace twozerofoureight
 {
@@ -40,9 +41,53 @@ namespace twozerofoureight
             return board;
         }
 
+        public Boolean isGameOver()
+        {
+            for(int x = 0 ; x < 4 ; x++)
+            {
+                for (int y = 0; y < 4; y++)
+                {
+                    if (x == 3 || y == 3 )
+                    {
+                        if(x == 3 && y != 3)
+                        {
+                            if(board[x,y] == board[x, y + 1])
+                            {
+                                return false;
+                            }
+                        }
+                        if ( y == 3 && x != 3)
+                        {
+                            if(board[x,y] == board[x + 1, y])
+                            {
+                                return false;
+                            }
+                        } 
+                    }else if( board[x,y] == board[x, y + 1] || board[x,y] == board[x+1,y])
+                    {
+                        return false;
+                    }
+                }
+            }
+            MessageBox.Show("GameOver");
+            return true;
+        } 
+        
+        public Boolean isfull()
+        {
+            foreach(int score in board)
+            {
+                if(score == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private void AddRandomSlot()
         {
-            while (true)
+            while (!isfull())
             {
                 int x = rand.Next(boardSize);
                 int y = rand.Next(boardSize);
@@ -86,6 +131,10 @@ namespace twozerofoureight
                         pos++;
                     }
                 }
+            }
+            if (isfull())
+            {
+                isGameOver();
             }
             return changed;
         }

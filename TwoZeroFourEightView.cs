@@ -54,6 +54,9 @@ namespace twozerofoureight
                 case 8:
                     l.BackColor = Color.Red;
                     break;
+                case 16:
+                    l.BackColor = Color.LightGreen;
+                    break;
                 default:
                     l.BackColor = Color.Green;
                     break;
@@ -77,6 +80,14 @@ namespace twozerofoureight
             UpdateTile(lbl31, board[3, 1]);
             UpdateTile(lbl32, board[3, 2]);
             UpdateTile(lbl33, board[3, 3]);
+
+            int score = 0;
+            foreach (int s in board)
+            {
+                score += s;
+            }
+            UpdateTile(label1, score);
+
         }
 
         private void btnLeft_Click(object sender, EventArgs e)
@@ -98,6 +109,34 @@ namespace twozerofoureight
         {
             controller.ActionPerformed(TwoZeroFourEightController.DOWN);
         }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Right)
+            {
+                controller.ActionPerformed(TwoZeroFourEightController.RIGHT);
+                return true;
+            }
+            if (keyData == Keys.Left)
+            {
+                controller.ActionPerformed(TwoZeroFourEightController.LEFT);
+                return true;
+            }
+            if (keyData == Keys.Up)
+            {
+                controller.ActionPerformed(TwoZeroFourEightController.UP);
+                return true;
+            }
+            if (keyData == Keys.Down)
+            {
+                controller.ActionPerformed(TwoZeroFourEightController.DOWN);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
